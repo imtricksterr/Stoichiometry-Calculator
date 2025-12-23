@@ -1,0 +1,14 @@
+#include <iostream>
+
+int main() {
+    // SCAFFOLD REPO MAIN FUNCTION INTERACTS WITH USER 
+    
+    
+    //TO DO / HOUSEKEEPING FOR WHEN I DO THIS:
+    // INSTALL MINGW OR MSVC (AND CMAKE?)
+    // USER INPUT FUNCTIONS
+    // CALL STOICHIOMETRY LOGICS
+
+
+    return 0;
+}
