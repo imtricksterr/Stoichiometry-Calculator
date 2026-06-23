@@ -45,20 +45,6 @@ frontend/
 - [ ] Example problems / quiz mode
 - [ ] Calculation history
 
-<<<<<<< HEAD
-=======
-## Who's Working On What
-
-| Feature | Person |
-|--------|--------|
-| Layout & navigation | |
-| Mole conversion calculator | |
-| Equation balancer | |
-| Example problems section | |
-
-> Fill this in once you've divided up the work!
-
->>>>>>> d0f744c90eb06da334e1a15fa1ed77ef6e8f17b1
 ## Branch Naming
 
 ```

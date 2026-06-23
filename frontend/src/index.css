@@ -18,7 +18,7 @@ html, body {
     color: #99B2DD;
     font-family: 'Roboto', sans-serif;
     font-size: 25px;
-    align-items: center
+    text-align: center
 }
 
 .centered-div {

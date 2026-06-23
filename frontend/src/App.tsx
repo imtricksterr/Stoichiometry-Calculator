@@ -2,8 +2,9 @@ import "./index.css";
 
 function App() {
   return (
-    <div className="title">Sample Name
-      <div className="subheader">A Stoichiometry Calculator</div>
+    <div className="header">
+      <h1 className= "title">Sample Name</h1>
+      <p className="subheader">A Stoichiometry Calculator</p>
     </div>
   );
 }
