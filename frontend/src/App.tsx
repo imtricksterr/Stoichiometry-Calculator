@@ -1,10 +1,15 @@
 import "./index.css";
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="title">Sample Name
-      <div className="subheader">A Stoichiometry Calculator</div>
-    </div>
+    <>
+      <header><Navbar /></header>
+      <main><Outlet /></ main>
+      <footer><Footer /></footer>
+    </>
   );
 }
 export default App;
