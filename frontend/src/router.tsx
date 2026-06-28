@@ -13,8 +13,12 @@ export const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      {index: true, element: <Home />},
-      {path: 'about', element: <About />}
+      { index: true, element: <Home /> },
+      { path: 'about', element: <About /> },
+      { path: 'history', element: <History /> },
+      {  path: 'login', element: <Login /> },
+      {  path: 'register', element: <Register /> },
+      {  path: 'profile', element: <Profile /> },
     ]
   }
 ])
