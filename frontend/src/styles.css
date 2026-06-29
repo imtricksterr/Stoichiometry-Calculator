@@ -3,7 +3,7 @@
 html,
 body {
   margin: 0;
-  background-color: #3a405a;
+  background-color: #f9fafb;
   min-height: 100%;
 }
 
@@ -25,7 +25,7 @@ app-root {
 }
 
 .title {
-  color: #a8c69f;
+  color: #111827;
   font-family: "Roboto", sans-serif;
   font-size: 60px;
   margin-top: 20px;
@@ -33,14 +33,14 @@ app-root {
 }
 
 .subheader {
-  color: #99b2dd;
+  color: #0d9488;
   font-family: "Roboto", sans-serif;
   font-size: 25px;
   text-align: center;
 }
 
 button {
-  background-color: #a8c69f;
+  background-color: #0d9488;
   border: none;
   color: white;
   padding: 20px;
@@ -52,6 +52,10 @@ button {
   cursor: pointer;
 }
 
+/* ============================================================================
+ * NAVIGATION
+ * ============================================================================ */
+
 .nav {
   padding-left: 0;
   margin-bottom: 0;
@@ -60,6 +64,7 @@ button {
 
 .nav-link {
   display: inline-block;
+  color: #111827;
   transition:
     color 0.15s ease,
     background-color 0.15s ease;
@@ -85,16 +90,25 @@ button {
  * FOOTER
  * ============================================================================ */
 
-footer {
-  background-color: #a8c69f;
+body footer {
+  background-color: #ffffff;
   color: white;
   text-align: center;
-  padding: 10px;
+  padding: 10px 0;
+  border-top: 1px solid #e2e8f0;
+  width: 100%;
 }
 
 footer .attribution {
   margin-left: 10px;
-  font-size: 0.8rem;
-  color: var(text--light);
+  font-size: 0.68rem;
+  color: #111827;
   font-weight: 300;
+}
+
+footer > .container {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

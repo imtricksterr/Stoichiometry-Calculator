@@ -5,7 +5,7 @@ function Navbar() {
     <nav className="navbar navbar-light">
       <div className="container">
         <a className="navbar-logo logo-font" href="/">
-          Sample Name
+          Ratio
         </a>
         <ul className="nav navbar-nav pull-xs-right">
           <li className="nav-item">
