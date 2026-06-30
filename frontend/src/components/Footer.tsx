@@ -10,7 +10,7 @@ function Footer() {
             Ratio
           </Link>
           <span className="attribution">
-            A Chemistry interactive learning project
+            A chemistry interactive learning project
           </span>
         </div>
 
