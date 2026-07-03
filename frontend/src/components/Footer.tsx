@@ -6,7 +6,7 @@ function Footer() {
     <footer>
       <div className="container">
         <div>
-          <Link to="/" className="logo-font">
+          <Link to="/" className="navbar-logo-footer">
             Ratio
           </Link>
           <span className="attribution">
