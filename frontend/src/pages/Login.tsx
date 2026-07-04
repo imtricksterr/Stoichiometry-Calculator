@@ -47,7 +47,7 @@ function Login() {
             Sign in
           </button>
           <p className="text-xs-center">
-            <Link to="/forgotpassword">Forgot Password?</Link>
+            <Link to="/forgot-password">Forgot Password?</Link>
           </p>
         </form>
       </div>
