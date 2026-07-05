@@ -1,11 +1,16 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+
+import MoonIcon from "../assets/icons/moon.svg?react";
+import SunIcon from "../assets/icons/sun.svg?react";
 
 function Navbar() {
   const { user } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
 
   return (
-    <nav className="navbar navbar-light">
+    <nav className="navbar">
       <div className="container">
         <a className="navbar-logo logo-font" href="/">
           Ratio
@@ -37,6 +42,27 @@ function Navbar() {
               </li>
             </>
           )}
+          <li className="nav-item">
+            <button onClick={toggleTheme} className="btn btn-sm">
+              {isDark ? (
+                <SunIcon
+                  style={{
+                    fill: "var(--color-text)",
+                    width: "20px",
+                    height: "20px",
+                  }}
+                />
+              ) : (
+                <MoonIcon
+                  style={{
+                    fill: "var(--color-text)",
+                    width: "20px",
+                    height: "20px",
+                  }}
+                />
+              )}
+            </button>
+          </li>
         </ul>
       </div>
     </nav>

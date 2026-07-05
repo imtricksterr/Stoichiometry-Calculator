@@ -27,7 +27,13 @@ function Home() {
 
       {}
       <div className="container" style={{ marginTop: "3rem" }}>
-        <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>
+        <h2
+          style={{
+            textAlign: "center",
+            marginBottom: "2rem",
+            color: "var(--color-text)",
+          }}
+        >
           General Functions
         </h2>
         <div className="row">
@@ -66,7 +72,10 @@ function Home() {
       </div>
 
       {}
-      <div className="container" style={{ marginTop: "3rem" }}>
+      <div
+        className="container"
+        style={{ marginTop: "3rem", color: "var(--color-text)" }}
+      >
         <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>
           How it works
         </h2>
@@ -90,9 +99,20 @@ function Home() {
       </div>
 
       {/* CTA */}
-      <div style={{ textAlign: "center", margin: "4rem 0" }}>
+      <div
+        style={{
+          textAlign: "center",
+          margin: "4rem 0",
+          color: "var(--color-text)",
+        }}
+      >
         <h2>Ready to start?</h2>
-        <p style={{ color: "#6b7280", marginBottom: "1.5rem" }}>
+        <p
+          style={{
+            marginBottom: "1.5rem",
+            color: "var(--color-text)",
+          }}
+        >
           Jump into the calculator and get studying.
         </p>
         <Link to="/calculations" className="btn btn-lg btn-primary">

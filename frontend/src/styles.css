@@ -4,10 +4,12 @@
   --color-primary: #0d9488;
   --color-primary-hover: #0b7c71;
   --color-background: #f9fafb;
+  --base-variant: #e8e9ed;
   --color-text: #111827;
   --color-text-muted: #6b7280;
   --color-border: #e2e8f0;
   --color-white: #ffffff;
+  --color-surface: #ffffff;
 }
 
 html,
@@ -23,6 +25,16 @@ app-root {
   flex: 1;
 }
 
+[data-theme="dark"] {
+  --color-primary: #0d9488;
+  --color-primary-hover: #0b7c71;
+  --color-surface: #1f2937;
+  --color-background: #111827;
+  --color-text: #f9fafb;
+  --color-text-muted: #9ca3af;
+  --color-border: #374151;
+}
+
 .logo-font {
   font-family: "Roboto", sans-serif;
 }
@@ -35,8 +47,39 @@ app-root {
 }
 
 /* ============================================================================
+ * THEME
+ * ============================================================================ */
+
+#theme-switch {
+  height: 50px;
+  width: 50px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: var(--base-variant);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+#theme-switch:hover {
+  background-color: var(--base-variant);
+  cursor: pointer;
+}
+
+/* ============================================================================
  * NAVIGATION
  * ============================================================================ */
+
+header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
 .nav {
   padding-left: 0;
@@ -66,6 +109,7 @@ app-root {
   display: block;
   padding-top: 0.425rem;
   padding-bottom: 0.425rem;
+  color: var(--color-text);
 }
 
 .navbar-logo {
@@ -103,9 +147,9 @@ app-root {
   position: relative;
   display: block;
   margin-bottom: 0.75rem;
-  background-color: #fff;
+  background-color: var(--color-white);
   border-radius: 0.75rem;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-white);
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.08),
     0 1px 2px rgba(0, 0, 0, 0.06);
@@ -137,8 +181,7 @@ fieldset {
  * ============================================================================ */
 
 body footer {
-  background-color: var(--color-white);
-  color: var(--color-white);
+  background-color: var(--color-surface);
   text-align: center;
   padding: 10px 0;
   border-top: 1px solid var(--color-border);
@@ -176,4 +219,51 @@ footer > .container {
 
 .pull-xs-right {
   float: right !important;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 0.75rem 1.75rem;
+  font-size: 1.125rem;
 }

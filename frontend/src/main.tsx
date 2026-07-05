@@ -7,9 +7,12 @@ import "./styles.css";
 import "./index.css";
 
 import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <AuthProvider>
-    <RouterProvider router={router} />,
-  </AuthProvider>,
+  <ThemeProvider>
+    <AuthProvider>
+      <RouterProvider router={router} />,
+    </AuthProvider>
+  </ThemeProvider>,
 );

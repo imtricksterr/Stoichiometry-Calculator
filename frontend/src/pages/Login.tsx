@@ -18,7 +18,10 @@ function Login() {
 
   return (
     <div className="auth-page">
-      <div className="container page" style={{ maxWidth: "400px" }}>
+      <div
+        className="container page"
+        style={{ maxWidth: "400px", color: "var(--color-text)" }}
+      >
         <h1 className="text-xs-center">Sign in</h1>
         <p className="text-xs-center">
           <Link to="/register">Don't have an account?</Link>
