@@ -1,9 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --color-primary: #0d9488;
+  --color-primary-hover: #0b7c71;
+  --color-background: #f9fafb;
+  --color-text: #111827;
+  --color-text-muted: #6b7280;
+  --color-border: #e2e8f0;
+  --color-white: #ffffff;
+}
+
 html,
 body {
   margin: 0;
-  background-color: #f9fafb;
+  background-color: var(--color-background);
   min-height: 100%;
 }
 
@@ -36,7 +46,7 @@ app-root {
 
 .nav-link {
   display: inline-block;
-  color: #111827;
+  color: var(--color-text);
   transition:
     color 0.15s ease,
     background-color 0.15s ease;
@@ -59,14 +69,14 @@ app-root {
 }
 
 .navbar-logo {
-  color: #0d9488;
+  color: var(--color-primary);
   text-decoration: none;
   font-size: 1.5rem;
   font-weight: 500;
 }
 
 .navbar-logo:hover {
-  color: #0d9488;
+  color: var(--color-primary);
   text-decoration: none;
 }
 
@@ -75,7 +85,7 @@ app-root {
  * ============================================================================ */
 
 .title {
-  color: #0d9488;
+  color: var(--color-primary);
   font-family: "Roboto", sans-serif;
   font-size: 60px;
   margin-top: 20px;
@@ -83,7 +93,7 @@ app-root {
 }
 
 .subheader {
-  color: #111827;
+  color: var(--color-text);
   font-family: "Roboto", sans-serif;
   font-size: 25px;
   text-align: center;
@@ -122,36 +132,23 @@ fieldset {
   margin-bottom: 1rem;
 }
 
-button {
-  background-color: #0d9488;
-  border: none;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
 /* ============================================================================
  * FOOTER
  * ============================================================================ */
 
 body footer {
-  background-color: #ffffff;
-  color: white;
+  background-color: var(--color-white);
+  color: var(--color-white);
   text-align: center;
   padding: 10px 0;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-border);
   width: 100%;
 }
 
 footer .attribution {
   margin-left: 10px;
   font-size: 0.68rem;
-  color: #111827;
+  color: var(--color-text);
   font-weight: 300;
 }
 
@@ -163,7 +160,7 @@ footer > .container {
 }
 
 .navbar-logo-footer {
-  color: #0d9488;
+  color: var(--color-primary);
   text-decoration: none;
   font-size: 1.2rem;
   font-weight: 500;
