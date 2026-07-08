@@ -71,7 +71,30 @@ function Profile() {
             <p style={{ color: "var(--color-text-muted)" }}>
               No saved calculations yet. Open{" "}
               <a href="/calculations">calculator</a> to get started.
+              <a href="/history">history</a> to get started.
             </p>
+          </div>
+        </div>
+
+        {/* Saved Calculations */}
+        <div className="card" style={{ marginBottom: "1rem" }}>
+          <div
+            className="card-block"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>
+              <h5 style={{ marginBottom: "4px" }}>Saved Calculations</h5>
+              <p style={{ color: "var(--color-text-muted)", marginBottom: 0 }}>
+                View your past calculations and results.
+              </p>
+            </div>
+            <a href="/history" className="btn btn-outline-primary">
+              View History
+            </a>
           </div>
         </div>
 
