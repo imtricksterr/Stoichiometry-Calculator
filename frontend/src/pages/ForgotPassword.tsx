@@ -13,9 +13,12 @@ function ForgotPassword() {
 
   return (
     <div className="auth-page">
-      <div className="container page" style={{ maxWidth: "400px" }}>
+      <div
+        className="container page"
+        style={{ maxWidth: "400px", color: "var(--color-text)" }}
+      >
         <h1 className="text-xs-center">Forgot Password</h1>
-        <p className="text-xs-center" style={{ color: "#6b7280" }}>
+        <p className="text-xs-center" style={{ color: "var(--color-text)" }}>
           Enter your account email for your reset link.
         </p>
 

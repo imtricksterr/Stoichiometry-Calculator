@@ -10,9 +10,7 @@ function Login() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    // fake log
-    login({ name: email.split("@")[0] });
+    login({ name: email.split("@")[0], email });
     navigate("/");
   }
 
