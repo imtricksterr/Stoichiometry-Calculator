@@ -1,5 +1,443 @@
+import { useState } from "react";
+
+type Tab =
+  | "molar-mass"
+  | "stoichiometry"
+  | "limiting-reagent"
+  | "percent-yield";
+
 function Calculations() {
-  return <div>Calculations Page</div>;
+  const [activeTab, setActiveTab] = useState<Tab>("molar-mass");
+
+  return (
+    <div className="container page" style={{ marginTop: "2rem" }}>
+      {/* Tabs */}
+      <ul
+        className="nav nav-pills outline-active"
+        style={{ marginBottom: "2rem" }}
+      >
+        {[
+          { id: "molar-mass", label: "Molar Mass" },
+          { id: "stoichiometry", label: "Stoichiometry" },
+          { id: "limiting-reagent", label: "Limiting Reagent" },
+          { id: "percent-yield", label: "% Yield" },
+        ].map((tab) => (
+          <li className="nav-item" key={tab.id}>
+            <button
+              className={`nav-link ${activeTab === tab.id ? "active" : ""}`}
+              onClick={() => setActiveTab(tab.id as Tab)}
+            >
+              {tab.label}
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {/* Tab Content */}
+      {activeTab === "molar-mass" && <MolarMass />}
+      {activeTab === "stoichiometry" && <Stoichiometry />}
+      {activeTab === "limiting-reagent" && <LimitingReagent />}
+      {activeTab === "percent-yield" && <PercentYield />}
+    </div>
+  );
+}
+
+function MolarMass() {
+  const [formula, setFormula] = useState("");
+  const [result, setResult] = useState<number | null>(null);
+
+  function calculate() {
+    // logic placeholder
+    setResult(18.015);
+  }
+
+  return (
+    <div>
+      <h3>Molar Mass</h3>
+      <p style={{ color: "var(--color-text-muted)" }}>
+        Enter a chemical formula to calculate its molar mass.
+      </p>
+      <div className="form-group">
+        <input
+          className="form-control form-control-lg"
+          placeholder="e.g. H2O"
+          value={formula}
+          onChange={(e) => setFormula(e.target.value)}
+        />
+      </div>
+      <button className="btn btn-primary" onClick={calculate}>
+        Calculate
+      </button>
+      {result && (
+        <div className="card" style={{ marginTop: "1.5rem" }}>
+          <div className="card-block">
+            <p
+              style={{
+                color: "var(--color-text-muted)",
+                fontSize: "0.8rem",
+                textTransform: "uppercase",
+              }}
+            >
+              Molar Mass
+            </p>
+            <h2 style={{ color: "var(--color-primary)" }}>{result} g/mol</h2>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Stoichiometry() {
+  const [given, setGiven] = useState("");
+  const [givenMoles, setGivenMoles] = useState("");
+  const [target, setTarget] = useState("");
+  const [result, setResult] = useState<number | null>(null);
+
+  function calculate() {
+    // logic placeholder
+    setResult(2.5);
+  }
+
+  return (
+    <div>
+      <h3>Stoichiometry</h3>
+      <p style={{ color: "var(--color-text-muted)" }}>
+        Calculate moles of a product or reactant from a balanced equation.
+      </p>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group">
+            <label>Given Compound</label>
+            <input
+              className="form-control"
+              placeholder="e.g. H2"
+              value={given}
+              onChange={(e) => setGiven(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group">
+            <label>Moles of Given</label>
+            <input
+              className="form-control"
+              placeholder="e.g. 3"
+              value={givenMoles}
+              onChange={(e) => setGivenMoles(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="form-group">
+        <label>Target Compound</label>
+        <input
+          className="form-control"
+          placeholder="e.g. NH3"
+          value={target}
+          onChange={(e) => setTarget(e.target.value)}
+        />
+      </div>
+      <button className="btn btn-primary" onClick={calculate}>
+        Calculate
+      </button>
+      {result && (
+        <div className="card" style={{ marginTop: "1.5rem" }}>
+          <div className="card-block">
+            <p
+              style={{
+                color: "var(--color-text-muted)",
+                fontSize: "0.8rem",
+                textTransform: "uppercase",
+              }}
+            >
+              Moles of Target
+            </p>
+            <h2 style={{ color: "var(--color-primary)" }}>{result} mol</h2>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LimitingReagent() {
+  const [reactant1, setReactant1] = useState({
+    formula: "",
+    coeff: "",
+    mass: "",
+  });
+  const [reactant2, setReactant2] = useState({
+    formula: "",
+    coeff: "",
+    mass: "",
+  });
+  const [product, setProduct] = useState({ formula: "", coeff: "" });
+  const [result, setResult] = useState<string | null>(null);
+
+  function calculate() {
+    // logic placeholder
+    setResult(reactant1.formula || "H2");
+  }
+
+  return (
+    <div>
+      <h3>Limiting Reagent</h3>
+      <p style={{ color: "var(--color-text-muted)" }}>
+        Enter masses of two reactants to identify the limiting reagent.
+      </p>
+
+      {/* Reactant 1 */}
+      <div className="card" style={{ marginBottom: "1rem" }}>
+        <div className="card-block">
+          <p
+            style={{
+              textTransform: "uppercase",
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+            }}
+          >
+            Reactant 1
+          </p>
+          <div className="row">
+            <div className="col-md-3">
+              <div className="form-group">
+                <label>Coeff.</label>
+                <input
+                  className="form-control"
+                  placeholder="1"
+                  value={reactant1.coeff}
+                  onChange={(e) =>
+                    setReactant1({ ...reactant1, coeff: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+            <div className="col-md-9">
+              <div className="form-group">
+                <label>Formula</label>
+                <input
+                  className="form-control"
+                  placeholder="e.g. N2"
+                  value={reactant1.formula}
+                  onChange={(e) =>
+                    setReactant1({ ...reactant1, formula: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
+            <label>Mass (g)</label>
+            <input
+              className="form-control"
+              placeholder="e.g. 28.0"
+              value={reactant1.mass}
+              onChange={(e) =>
+                setReactant1({ ...reactant1, mass: e.target.value })
+              }
+            />
+          </div>
+        </div>
+      </div>
+
+      <p style={{ textAlign: "center", color: "var(--color-text-muted)" }}>
+        + REACTS WITH
+      </p>
+
+      {/* Reactant 2 */}
+      <div className="card" style={{ marginBottom: "1rem" }}>
+        <div className="card-block">
+          <p
+            style={{
+              textTransform: "uppercase",
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+            }}
+          >
+            Reactant 2
+          </p>
+          <div className="row">
+            <div className="col-md-3">
+              <div className="form-group">
+                <label>Coeff.</label>
+                <input
+                  className="form-control"
+                  placeholder="1"
+                  value={reactant2.coeff}
+                  onChange={(e) =>
+                    setReactant2({ ...reactant2, coeff: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+            <div className="col-md-9">
+              <div className="form-group">
+                <label>Formula</label>
+                <input
+                  className="form-control"
+                  placeholder="e.g. H2"
+                  value={reactant2.formula}
+                  onChange={(e) =>
+                    setReactant2({ ...reactant2, formula: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
+            <label>Mass (g)</label>
+            <input
+              className="form-control"
+              placeholder="e.g. 6.0"
+              value={reactant2.mass}
+              onChange={(e) =>
+                setReactant2({ ...reactant2, mass: e.target.value })
+              }
+            />
+          </div>
+        </div>
+      </div>
+
+      <p style={{ textAlign: "center", color: "var(--color-text-muted)" }}>
+        → PRODUCES
+      </p>
+
+      {/* Product */}
+      <div className="card" style={{ marginBottom: "1rem" }}>
+        <div className="card-block">
+          <p
+            style={{
+              textTransform: "uppercase",
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+            }}
+          >
+            Product
+          </p>
+          <div className="row">
+            <div className="col-md-3">
+              <div className="form-group">
+                <label>Coeff.</label>
+                <input
+                  className="form-control"
+                  placeholder="1"
+                  value={product.coeff}
+                  onChange={(e) =>
+                    setProduct({ ...product, coeff: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+            <div className="col-md-9">
+              <div className="form-group">
+                <label>Formula</label>
+                <input
+                  className="form-control"
+                  placeholder="e.g. NH3"
+                  value={product.formula}
+                  onChange={(e) =>
+                    setProduct({ ...product, formula: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        className="btn btn-primary"
+        style={{ width: "100%" }}
+        onClick={calculate}
+      >
+        Find Limiting Reagent
+      </button>
+
+      {result && (
+        <div className="card" style={{ marginTop: "1.5rem" }}>
+          <div className="card-block">
+            <p
+              style={{
+                color: "var(--color-text-muted)",
+                fontSize: "0.8rem",
+                textTransform: "uppercase",
+              }}
+            >
+              Limiting Reagent
+            </p>
+            <h2 style={{ color: "var(--color-primary)" }}>{result}</h2>
+            <p style={{ color: "var(--color-text-muted)" }}>
+              consumed first — limits product formation
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PercentYield() {
+  const [actual, setActual] = useState("");
+  const [theoretical, setTheoretical] = useState("");
+  const [result, setResult] = useState<number | null>(null);
+
+  function calculate() {
+    const pct = (parseFloat(actual) / parseFloat(theoretical)) * 100;
+    setResult(Math.round(pct * 100) / 100);
+  }
+
+  return (
+    <div>
+      <h3>% Yield</h3>
+      <p style={{ color: "var(--color-text-muted)" }}>
+        Calculate the percent yield of a reaction.
+      </p>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group">
+            <label>Actual Yield (g)</label>
+            <input
+              className="form-control form-control-lg"
+              placeholder="e.g. 3.5"
+              value={actual}
+              onChange={(e) => setActual(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group">
+            <label>Theoretical Yield (g)</label>
+            <input
+              className="form-control form-control-lg"
+              placeholder="e.g. 4.0"
+              value={theoretical}
+              onChange={(e) => setTheoretical(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      <button className="btn btn-primary" onClick={calculate}>
+        Calculate
+      </button>
+      {result !== null && (
+        <div className="card" style={{ marginTop: "1.5rem" }}>
+          <div className="card-block">
+            <p
+              style={{
+                color: "var(--color-text-muted)",
+                fontSize: "0.8rem",
+                textTransform: "uppercase",
+              }}
+            >
+              Percent Yield
+            </p>
+            <h2 style={{ color: "var(--color-primary)" }}>{result}%</h2>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default Calculations;
