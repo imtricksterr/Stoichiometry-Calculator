@@ -8,6 +8,7 @@ import Register from "./pages/Register.tsx";
 import Profile from "./pages/Profile.tsx";
 import ForgotPassword from "./pages/ForgotPassword.tsx";
 import Calculations from "./pages/Calculations.tsx";
+import Settings from "./pages/Settings.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
       { path: "profile", element: <Profile /> },
       { path: "forgot-password", element: <ForgotPassword /> },
       { path: "calculations", element: <Calculations /> },
+      { path: "settings", element: <Settings /> },
     ],
   },
 ]);

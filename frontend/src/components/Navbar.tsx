@@ -4,6 +4,7 @@ import { useTheme } from "../context/ThemeContext";
 
 import MoonIcon from "../assets/icons/moon.svg?react";
 import SunIcon from "../assets/icons/sun.svg?react";
+import GearIcon from "../assets/icons/gear.svg?react";
 
 function Navbar() {
   const { user } = useAuth();
@@ -21,7 +22,6 @@ function Navbar() {
               Home
             </NavLink>
           </li>
-
           {user ? (
             <li className="nav-item">
               <NavLink className="nav-link" to="/profile">
@@ -62,6 +62,17 @@ function Navbar() {
                 />
               )}
             </button>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/settings" className="btn btn-sm">
+              <GearIcon
+                style={{
+                  fill: "var(--color-text)",
+                  width: "20px",
+                  height: "20px",
+                }}
+              />
+            </NavLink>
           </li>
         </ul>
       </div>
