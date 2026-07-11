@@ -1,4 +1,4 @@
-# Stoichiometry Calculator
+# Ratio
 
 A web app for stoichiometry calculations, mole conversions, and example problems.
 
@@ -17,9 +17,25 @@ A web app for stoichiometry calculations, mole conversions, and example problems
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo/frontend
+git clone https://github.com/imtricksterr/Stoichiometry-Calculator.git
+cd stoichiometry-calculator/frontend
 npm install
+npm run dev
+```
+
+## Important Note: Frontend and Backend are ran separately
+
+### Run Frontend:
+
+```bash
+cd stoichiometry-calulator/frontend
+npm run dev
+```
+
+### Run Backend:
+
+```bash
+cd stoichiometry-calulator/backend
 npm run dev
 ```
 
@@ -36,44 +52,17 @@ frontend/
     data/             # Example problems and sample data
     App.tsx           # Root component
     main.tsx          # Entry point (don't touch)
+backend/
+  src/
+    config/       # Database connection + env variables
+    routes/       # API route definitions
+    models/       # Mongoose schemas
+    controllers/  # Route handler
+    app.js       # Express App
 ```
-
-## Features
-
-- [ ] Mole/mass/particle conversions
-- [ ] Chemical equation balancer
-- [ ] Example problems / quiz mode
-- [ ] Calculation history
-
-## Branch Naming
-
-```
-your-name/feature-name
-```
-
-Examples: `trickster/mole-converter`, `ruki/equation-balancer`
-
-## Workflow
-
-1. Always branch off `main` — never commit directly to it
-2. Pull latest main before starting new work:
-   ```bash
-   git pull origin main
-   ```
-3. Commit often with clear messages:
-   ```bash
-   git commit -m "add mole to gram conversion formula"
-   ```
-4. Open a Pull Request on GitHub when your feature is ready to merge
 
 ## Recommended VS Code Extensions
 
 - ESLint
 - Prettier
 - ES7+ React/Redux/React-Native snippets
-
-## Resources
-
-- [React Docs](https://react.dev) — start with the Tic-Tac-Toe tutorial
-- [Tailwind CSS Docs](https://tailwindcss.com/docs)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
