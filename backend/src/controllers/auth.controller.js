@@ -3,15 +3,14 @@ import bcrpyt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import User from "../models/user.model.js";
-import userRouter from "../routes/user.routes.js";
 import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
 
-export const signUp = async (req, res) => {
+export const signUp = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -24,7 +23,7 @@ export const signUp = async (req, res) => {
     const salt = await bcrpyt.genSalt(10);
     const hashedPassword = await bcrpyt.hash(password, salt);
 
-    const newUsers = new User.create(
+    const newUsers = await User.create(
       [{ name, email, password: hashedPassword }],
       { session },
     );
