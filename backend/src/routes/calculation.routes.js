@@ -1,17 +1,21 @@
 import { Router } from "express";
+import {
+  deleteCalculation,
+  getCalculation,
+  getCalculations,
+  createCalculation,
+} from "../controllers/calculation.controller.js";
+
+import authorize from "../middlewares/auth.middleware.js";
 
 const calculationRouter = Router();
 
-calculationRouter.post("/", (req, res) =>
-  res.send({ title: "CREATES new calculation" }),
-);
+calculationRouter.get("/:id", authorize, getCalculation);
 
-calculationRouter.put("/:id", (req, res) =>
-  res.send({ title: "UPDATES calculation" }),
-);
+calculationRouter.get("/", authorize, getCalculations);
 
-calculationRouter.delete("/:id", (req, res) =>
-  res.send({ title: "DELETES calculation" }),
-);
+calculationRouter.post("/", authorize, createCalculation);
+
+calculationRouter.delete("/id", authorize, deleteCalculation);
 
 export default calculationRouter;
