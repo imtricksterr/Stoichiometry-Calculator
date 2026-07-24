@@ -24,3 +24,14 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
   if (!res.ok) throw new Error(data.message || "Error");
   return data;
 }
+
+export async function saveCalculation(
+  type: string,
+  label: string,
+  result: string,
+) {
+  return apiRequest("/calculations", {
+    method: "POST",
+    body: JSON.stringify({ type, label, result }),
+  });
+}

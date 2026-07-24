@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import { apiRequest } from "../lib/api";
 
 type FilterType =
   | "all"
@@ -9,51 +10,12 @@ type FilterType =
   | "percent-yield";
 
 interface HistoryEntry {
-  id: number;
+  _id: string;
   type: FilterType;
   label: string;
   result: string;
-  date: string;
+  createdAt: string;
 }
-
-// placeholder data - will be replaced with real backend data later
-const mockHistory: HistoryEntry[] = [
-  {
-    id: 1,
-    type: "molar-mass",
-    label: "H2O",
-    result: "18.015 g/mol",
-    date: "July 6, 2026",
-  },
-  {
-    id: 2,
-    type: "stoichiometry",
-    label: "N2 + 3H2 → 2NH3",
-    result: "2.5 mol NH3",
-    date: "July 6, 2026",
-  },
-  {
-    id: 3,
-    type: "limiting-reagent",
-    label: "N2 + H2 → NH3",
-    result: "H2 is limiting",
-    date: "July 5, 2026",
-  },
-  {
-    id: 4,
-    type: "percent-yield",
-    label: "Actual: 3.5g / Theoretical: 4.0g",
-    result: "87.5%",
-    date: "July 5, 2026",
-  },
-  {
-    id: 5,
-    type: "molar-mass",
-    label: "C6H12O6",
-    result: "180.156 g/mol",
-    date: "July 4, 2026",
-  },
-];
 
 const filterLabels: { id: FilterType; label: string }[] = [
   { id: "all", label: "All" },
@@ -72,12 +34,40 @@ const typeLabels: Record<string, string> = {
 
 function History() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+  const [calculations, setCalculations] = useState<HistoryEntry[]>([]);
+  const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) return;
+
+    async function fetchCalculations() {
+      try {
+        const data = await apiRequest("/calculations");
+        setCalculations(data.data);
+      } catch (err) {
+        console.error("Failed to fetch calculations:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCalculations();
+  }, [user]);
+
+  async function handleDelete(id: string) {
+    try {
+      await apiRequest(`/calculations/${id}`, { method: "DELETE" });
+      setCalculations((prev) => prev.filter((c) => c._id !== id));
+    } catch (err) {
+      console.error("Failed to delete calculation:", err);
+    }
+  }
 
   const filtered =
     activeFilter === "all"
-      ? mockHistory
-      : mockHistory.filter((entry) => entry.type === activeFilter);
+      ? calculations
+      : calculations.filter((entry) => entry.type === activeFilter);
 
   if (!user) {
     return (
@@ -92,6 +82,17 @@ function History() {
         <a href="/login" className="btn btn-primary">
           Sign In
         </a>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div
+        className="container page"
+        style={{ textAlign: "center", marginTop: "4rem" }}
+      >
+        <p style={{ color: "var(--color-text-muted)" }}>Loading...</p>
       </div>
     );
   }
@@ -131,7 +132,7 @@ function History() {
         filtered.map((entry) => (
           <div
             className="card"
-            key={entry.id}
+            key={entry._id}
             style={{ marginBottom: "0.75rem" }}
           >
             <div
@@ -174,9 +175,16 @@ function History() {
                     marginBottom: "8px",
                   }}
                 >
-                  {entry.date}
+                  {new Date(entry.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
                 </p>
-                <button className="btn btn-sm btn-outline-danger">
+                <button
+                  className="btn btn-sm btn-outline-danger"
+                  onClick={() => handleDelete(entry._id)}
+                >
                   Delete
                 </button>
               </div>

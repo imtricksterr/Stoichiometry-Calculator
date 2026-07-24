@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import { useAuth } from "../context/AuthContext";
+import { saveCalculation } from "../lib/api";
+
 type Tab =
   | "molar-mass"
   | "stoichiometry"
@@ -45,10 +48,15 @@ function Calculations() {
 function MolarMass() {
   const [formula, setFormula] = useState("");
   const [result, setResult] = useState<number | null>(null);
+  const { user } = useAuth();
 
-  function calculate() {
-    // logic placeholder
+  async function calculate() {
+    const calculated = 18.015; // placeholder
     setResult(18.015);
+
+    if (user) {
+      await saveCalculation("molar-mass", formula, `${calculated} g/mol`);
+    }
   }
 
   return (
@@ -93,10 +101,19 @@ function Stoichiometry() {
   const [givenMoles, setGivenMoles] = useState("");
   const [target, setTarget] = useState("");
   const [result, setResult] = useState<number | null>(null);
+  const { user } = useAuth();
 
-  function calculate() {
-    // logic placeholder
-    setResult(2.5);
+  async function calculate() {
+    const calculated = 2.5; // placeholder
+    setResult(calculated);
+
+    if (user) {
+      await saveCalculation(
+        "stoichiometry",
+        `${given} -> ${target}`,
+        `${calculated}`,
+      );
+    }
   }
 
   return (
@@ -175,9 +192,19 @@ function LimitingReagent() {
   const [product, setProduct] = useState({ formula: "", coeff: "" });
   const [result, setResult] = useState<string | null>(null);
 
-  function calculate() {
-    // logic placeholder
-    setResult(reactant1.formula || "H2");
+  const { user } = useAuth();
+
+  async function calculate() {
+    const limiting = reactant1.formula || "H2"; // placeholder
+    setResult(limiting);
+
+    if (user) {
+      await saveCalculation(
+        "limiting-reagent",
+        `${reactant1.formula} + ${reactant2.formula} -> ${product.formula}`,
+        `${limiting} is limiting`,
+      );
+    }
   }
 
   return (
@@ -381,10 +408,21 @@ function PercentYield() {
   const [actual, setActual] = useState("");
   const [theoretical, setTheoretical] = useState("");
   const [result, setResult] = useState<number | null>(null);
+  const { user } = useAuth();
 
-  function calculate() {
-    const pct = (parseFloat(actual) / parseFloat(theoretical)) * 100;
-    setResult(Math.round(pct * 100) / 100);
+  async function calculate() {
+    const pct =
+      Math.round((parseFloat(actual) / parseFloat(theoretical)) * 100 * 100) /
+      100;
+    setResult(Math.round(pct));
+
+    if (user) {
+      await saveCalculation(
+        "percent-yield",
+        `Actual: ${actual}g / Theoretical: ${theoretical}g`,
+        `${pct}%`,
+      );
+    }
   }
 
   return (
