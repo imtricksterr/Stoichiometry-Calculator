@@ -47,14 +47,17 @@ Then open [http://localhost:5173](http://localhost:5173) in your browser.
 frontend/
   src/
     components/       # Reusable UI components
+    context/          # Context Providers (Auth/Theme)
     pages/            # Main sections of the app
     utils/            # Math/logic functions (conversions, balancing)
     data/             # Example problems and sample data
+    lib/              # Backend API
     App.tsx           # Root component
     main.tsx          # Entry point (don't touch)
 backend/
   src/
     config/       # Database connection + env variables
+    middlewares/  # Auth (JWT)
     routes/       # API route definitions
     models/       # Mongoose schemas
     controllers/  # Route handler
