@@ -23,6 +23,7 @@ app-root {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: 100vh;
 }
 
 [data-theme="dark"] {
@@ -44,6 +45,12 @@ app-root {
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem 0;
+  min-height: calc(100vh - 160px);
 }
 
 /* ============================================================================
