@@ -16,6 +16,6 @@ calculationRouter.get("/", authorize, getCalculations);
 
 calculationRouter.post("/", authorize, createCalculation);
 
-calculationRouter.delete("/id", authorize, deleteCalculation);
+calculationRouter.delete("/:id", authorize, deleteCalculation);
 
 export default calculationRouter;

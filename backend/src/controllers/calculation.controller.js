@@ -47,7 +47,7 @@ export const createCalculation = async (req, res, next) => {
 
 export const deleteCalculation = async (req, res, next) => {
   try {
-    await Calculation.findByIdAndDelete(req.params._id);
+    await Calculation.findByIdAndDelete(req.params.id);
 
     res
       .status(200)
