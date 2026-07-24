@@ -12,9 +12,15 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
     },
   });
 
+  if (res.status === 401) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+    return;
+  }
+
   const data = await res.json();
 
   if (!res.ok) throw new Error(data.message || "Error");
-
   return data;
 }

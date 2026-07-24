@@ -4,7 +4,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
 function Settings() {
-  const { user, logout } = useAuth();
+  const { user, updateUser, deleteAccount } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
@@ -13,34 +13,46 @@ function Settings() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   if (!user) {
     navigate("/login");
     return null;
   }
 
-  function handleAccountSubmit(e: React.FormEvent) {
+  async function handleAccountSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // backend logic placeholder
-    alert("Account updated!");
+    setError("");
+    setSuccess("");
+    setLoading(true);
+    try {
+      await updateUser(name, email);
+      setSuccess("Account updated!");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function handlePasswordSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
       return;
     }
-    // backend logic placeholder
-    alert("Password updated!");
+    // password update logic coming when backend supports it
+    setSuccess("Password updated!");
   }
 
-  function handleDeleteAccount() {
+  async function handleDeleteAccount() {
     const confirmed = window.confirm(
       "Are you sure you want to delete your account? This cannot be undone.",
     );
     if (confirmed) {
-      logout();
+      await deleteAccount();
       navigate("/");
     }
   }
@@ -56,6 +68,13 @@ function Settings() {
       <p style={{ color: "var(--color-text-muted)", marginBottom: "2rem" }}>
         Manage your account and preferences.
       </p>
+
+      {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
+      {success && (
+        <p style={{ color: "var(--color-primary)", marginBottom: "1rem" }}>
+          {success}
+        </p>
+      )}
 
       {/* Account */}
       <div className="card" style={{ marginBottom: "1rem" }}>
@@ -80,8 +99,12 @@ function Settings() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <button className="btn btn-primary" type="submit">
-              Save Changes
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Saving..." : "Save Changes"}
             </button>
           </form>
         </div>

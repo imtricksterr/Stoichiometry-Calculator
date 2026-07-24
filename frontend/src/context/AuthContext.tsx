@@ -17,6 +17,8 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
+  updateUser: (name: string, email: string) => Promise<void>;
+  deleteAccount: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,6 +52,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(data.data.user);
   }
 
+  async function updateUser(name: string, email: string) {
+    const data = await apiRequest("/users/me", {
+      method: "PUT",
+      body: JSON.stringify({ name, email }),
+    });
+    const updatedUser = data.data;
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  }
+
+  async function deleteAccount() {
+    await apiRequest("/users/me", { method: "DELETE" });
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+  }
+
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -57,7 +76,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, register, logout, updateUser, deleteAccount }}
+    >
       {children}
     </AuthContext.Provider>
   );
