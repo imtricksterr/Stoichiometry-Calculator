@@ -5,13 +5,23 @@ import { useAuth } from "../context/AuthContext";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    login({ name: email.split("@")[0], email });
-    navigate("/");
+    setError("");
+    setLoading(true);
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -24,7 +34,7 @@ function Login() {
         <p className="text-xs-center">
           <Link to="/register">Don't have an account?</Link>
         </p>
-
+        {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
         <form onSubmit={handleSubmit}>
           <fieldset className="form-group">
             <input
@@ -44,10 +54,14 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </fieldset>
-          <button className="btn btn-lg btn-primary" style={{ width: "100%" }}>
-            Sign in
+          <button
+            className="btn btn-lg btn-primary"
+            style={{ width: "100%" }}
+            disabled={loading}
+          >
+            {loading ? "Signing in..." : "Sign in"}
           </button>
-          <p className="text-xs-center">
+          <p className="text-xs-center" style={{ marginTop: "1rem" }}>
             <Link to="/forgot-password">Forgot Password?</Link>
           </p>
         </form>

@@ -11,6 +11,11 @@ import calculationRouter from "./routes/calculation.routes.js";
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
 app.use(express.json());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
