@@ -56,12 +56,13 @@ frontend/
     main.tsx          # Entry point (don't touch)
 backend/
   src/
-    config/       # Database connection + env variables
-    middlewares/  # Auth (JWT)
-    routes/       # API route definitions
-    models/       # Mongoose schemas
-    controllers/  # Route handler
-    app.js       # Express App
+    config/           # Database connection + env variables
+    middlewares/      # Auth (JWT)
+    routes/           # API route definitions
+    models/           # Mongoose schemas
+    controllers/      # Route handler
+    chemistry-api/    # python calculator logic
+    app.js            # Express App
 ```
 
 ## Recommended VS Code Extensions
