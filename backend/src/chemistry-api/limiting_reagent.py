@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from chempy.util import periodic
+import periodictable
 
 
 app = FastAPI()
