@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from chempy import balance_stoichiometry
-from molar_mass import calculate_molar_mass, parse_formula
 
 app = FastAPI()
 
@@ -25,5 +24,3 @@ def balance_equation(reactants: list, products: list):
     prod = set(products)
 
     return balance_stoichiometry(reac, prod)
-
-
