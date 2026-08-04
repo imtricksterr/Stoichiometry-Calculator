@@ -63,17 +63,19 @@ function Navbar() {
               )}
             </button>
           </li>
-          <li className="nav-item">
-            <NavLink to="/settings" className="btn btn-sm">
-              <GearIcon
-                style={{
-                  fill: "var(--color-text)",
-                  width: "20px",
-                  height: "20px",
-                }}
-              />
-            </NavLink>
-          </li>
+          {user && (
+            <li className="nav-item">
+              <NavLink to="/settings" className="btn btn-sm">
+                <GearIcon
+                  style={{
+                    fill: "var(--color-text)",
+                    width: "20px",
+                    height: "20px",
+                  }}
+                />
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
     </nav>
