@@ -61,7 +61,7 @@ function MolarMass() {
 
   return (
     <div>
-      <h3>Molar Mass</h3>
+      <h3 style={{ color: "var(--color-text)" }}>Molar Mass</h3>
       <p style={{ color: "var(--color-text-muted)" }}>
         Enter a chemical formula to calculate its molar mass.
       </p>
@@ -118,14 +118,14 @@ function Stoichiometry() {
 
   return (
     <div>
-      <h3>Stoichiometry</h3>
+      <h3 style={{ color: "var(--color-text)" }}>Stoichiometry</h3>
       <p style={{ color: "var(--color-text-muted)" }}>
         Calculate moles of a product or reactant from a balanced equation.
       </p>
       <div className="row">
         <div className="col-md-6">
           <div className="form-group">
-            <label>Given Compound</label>
+            <label style={{ color: "var(--color-text)" }}>Given Compound</label>
             <input
               className="form-control"
               placeholder="e.g. H2"
@@ -136,7 +136,7 @@ function Stoichiometry() {
         </div>
         <div className="col-md-6">
           <div className="form-group">
-            <label>Moles of Given</label>
+            <label style={{ color: "var(--color-text)" }}>Moles of Given</label>
             <input
               className="form-control"
               placeholder="e.g. 3"
@@ -147,7 +147,7 @@ function Stoichiometry() {
         </div>
       </div>
       <div className="form-group">
-        <label>Target Compound</label>
+        <label style={{ color: "var(--color-text)" }}>Target Compound</label>
         <input
           className="form-control"
           placeholder="e.g. NH3"
@@ -209,7 +209,7 @@ function LimitingReagent() {
 
   return (
     <div>
-      <h3>Limiting Reagent</h3>
+      <h3 style={{ color: "var(--color-text)" }}>Limiting Reagent</h3>
       <p style={{ color: "var(--color-text-muted)" }}>
         Enter masses of two reactants to identify the limiting reagent.
       </p>
@@ -229,7 +229,7 @@ function LimitingReagent() {
           <div className="row">
             <div className="col-md-3">
               <div className="form-group">
-                <label>Coeff.</label>
+                <p>Coeff.</p>
                 <input
                   className="form-control"
                   placeholder="1"
@@ -242,7 +242,7 @@ function LimitingReagent() {
             </div>
             <div className="col-md-9">
               <div className="form-group">
-                <label>Formula</label>
+                <p>Formula</p>
                 <input
                   className="form-control"
                   placeholder="e.g. N2"
@@ -255,7 +255,7 @@ function LimitingReagent() {
             </div>
           </div>
           <div className="form-group">
-            <label>Mass (g)</label>
+            <p>Mass (g)</p>
             <input
               className="form-control"
               placeholder="e.g. 28.0"
@@ -287,7 +287,7 @@ function LimitingReagent() {
           <div className="row">
             <div className="col-md-3">
               <div className="form-group">
-                <label>Coeff.</label>
+                <p>Coeff.</p>
                 <input
                   className="form-control"
                   placeholder="1"
@@ -300,7 +300,7 @@ function LimitingReagent() {
             </div>
             <div className="col-md-9">
               <div className="form-group">
-                <label>Formula</label>
+                <p>Formula</p>
                 <input
                   className="form-control"
                   placeholder="e.g. H2"
@@ -313,7 +313,7 @@ function LimitingReagent() {
             </div>
           </div>
           <div className="form-group">
-            <label>Mass (g)</label>
+            <p>Mass (g)</p>
             <input
               className="form-control"
               placeholder="e.g. 6.0"
@@ -345,7 +345,7 @@ function LimitingReagent() {
           <div className="row">
             <div className="col-md-3">
               <div className="form-group">
-                <label>Coeff.</label>
+                <p>Coeff.</p>
                 <input
                   className="form-control"
                   placeholder="1"
@@ -358,7 +358,7 @@ function LimitingReagent() {
             </div>
             <div className="col-md-9">
               <div className="form-group">
-                <label>Formula</label>
+                <p>Formula</p>
                 <input
                   className="form-control"
                   placeholder="e.g. NH3"
@@ -427,14 +427,16 @@ function PercentYield() {
 
   return (
     <div>
-      <h3>% Yield</h3>
+      <h3 style={{ color: "var(--color-text)" }}>% Yield</h3>
       <p style={{ color: "var(--color-text-muted)" }}>
         Calculate the percent yield of a reaction.
       </p>
       <div className="row">
         <div className="col-md-6">
           <div className="form-group">
-            <label>Actual Yield (g)</label>
+            <label style={{ color: "var(--color-text)" }}>
+              Actual Yield (g)
+            </label>
             <input
               className="form-control form-control-lg"
               placeholder="e.g. 3.5"
@@ -445,7 +447,9 @@ function PercentYield() {
         </div>
         <div className="col-md-6">
           <div className="form-group">
-            <label>Theoretical Yield (g)</label>
+            <label style={{ color: "var(--color-text)" }}>
+              Theoretical Yield (g)
+            </label>
             <input
               className="form-control form-control-lg"
               placeholder="e.g. 4.0"

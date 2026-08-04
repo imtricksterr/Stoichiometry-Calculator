@@ -16,7 +16,13 @@ html,
 body {
   margin: 0;
   background-color: var(--color-background);
-  min-height: 100%;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 app-root {
@@ -45,6 +51,10 @@ app-root {
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.container.page {
+  color: "var(--color-text)";
 }
 
 .content {
@@ -191,7 +201,6 @@ body footer {
   background-color: var(--color-surface);
   text-align: center;
   padding: 10px 0;
-  border-top: 1px solid var(--color-border);
   width: 100%;
 }
 

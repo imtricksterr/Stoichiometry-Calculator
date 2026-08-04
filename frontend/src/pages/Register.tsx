@@ -27,7 +27,10 @@ function Register() {
 
   return (
     <div className="auth-page">
-      <div className="container page" style={{ maxWidth: "400px" }}>
+      <div
+        className="container page"
+        style={{ maxWidth: "400px", color: "var(--color-text)" }}
+      >
         <h1 className="text-xs-center">Register</h1>
         <p className="text-xs-center">
           <Link to="/login">Already have an account?</Link>

@@ -19,8 +19,12 @@ function Profile() {
     <div className="profile-page">
       <div className="user-info">
         <div className="container">
-          <h4>{user.name}</h4>
-          <p>{user.email}</p>
+          <h4 style={{ color: "var(--color-text)", marginBottom: "0.25rem" }}>
+            {user.name}
+          </h4>
+          <p style={{ color: "var(--color-text-muted)", marginBottom: "2rem" }}>
+            {user.email}
+          </p>
         </div>
       </div>
 
