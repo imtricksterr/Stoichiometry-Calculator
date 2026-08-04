@@ -20,4 +20,4 @@ def calculate_limiting_reagent(
         moles = mass / calculate_molar_mass(formula)
         product_moles[formula] = (moles / all_coeffs[formula]) * reference_coeff
 
-    return min(product_moles, key=product_moles.get)
+    return min(product_moles, key=product_moles.get) # type: ignore
