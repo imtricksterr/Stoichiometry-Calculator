@@ -49,8 +49,6 @@ frontend/
     components/       # Reusable UI components
     context/          # Context Providers (Auth/Theme)
     pages/            # Main sections of the app
-    utils/            # Math/logic functions (conversions, balancing)
-    data/             # Example problems and sample data
     lib/              # Backend API
     App.tsx           # Root component
     main.tsx          # Entry point (don't touch)
@@ -61,7 +59,7 @@ backend/
     routes/           # API route definitions
     models/           # Mongoose schemas
     controllers/      # Route handler
-    chemistry-api/    # python calculator logic
+    chemistry-api/    # Python calculator logic and functions (conversions, balancing)
     app.js            # Express App
 ```
 
