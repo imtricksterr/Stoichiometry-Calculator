@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api/v1";
+const BASE_URL = "http://localhost:8000";
 
 export async function apiRequest(endpoint: string, options: RequestInit = {}) {
   const token = localStorage.getItem("token");
@@ -33,5 +33,47 @@ export async function saveCalculation(
   return apiRequest("/calculations", {
     method: "POST",
     body: JSON.stringify({ type, label, result }),
+  });
+}
+
+// python api
+export async function calculateMolarMass(formula: string) {
+  return apiRequest("/calculations/molar-mass", {
+    method: "POST",
+    body: JSON.stringify({ formula }),
+  });
+}
+
+export async function calculateStoichiometry(
+  given: string,
+  moles: number,
+  target: string,
+  reactants: string[],
+  products: string[],
+) {
+  return apiRequest("/calculations/stoichiometry", {
+    method: "POST",
+    body: JSON.stringify({ given, moles, target, reactants, products }),
+  });
+}
+
+export async function calculatePercentYield(
+  actual: number,
+  theoretical: number,
+) {
+  return apiRequest("/calculations/percent-yield", {
+    method: "POST",
+    body: JSON.stringify({ actual, theoretical }),
+  });
+}
+
+export async function calculateLimitingReagent(
+  reactants: string[],
+  products: string[],
+  masses: number[],
+) {
+  return apiRequest("/calculations/limiting-reagent", {
+    method: "POST",
+    body: JSON.stringify({ reactants, products, masses }),
   });
 }
