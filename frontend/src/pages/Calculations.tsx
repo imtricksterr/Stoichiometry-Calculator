@@ -99,6 +99,8 @@ function MolarMass() {
 function Stoichiometry() {
   const [given, setGiven] = useState("");
   const [givenMoles, setGivenMoles] = useState("");
+  const [givenReactants, setGivenReactants] = useState("");
+  const [givenProducts, setGivenProducts] = useState("");
   const [target, setTarget] = useState("");
   const [result, setResult] = useState<number | null>(null);
   const { user } = useAuth();
@@ -155,6 +157,28 @@ function Stoichiometry() {
           onChange={(e) => setTarget(e.target.value)}
         />
       </div>
+      <div className="col-md-6">
+        <div className="form-group">
+          <label style={{ color: "var(--color-text)" }}>Reactants</label>
+          <input
+            className="form-control"
+            placeholder="e.g. N2H2"
+            value={givenReactants}
+            onChange={(e) => setGivenReactants(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="col-md-6">
+        <div className="form-group">
+          <label style={{ color: "var(--color-text)" }}>Products</label>
+          <input
+            className="form-control"
+            placeholder="e.g. NH3"
+            value={givenProducts}
+            onChange={(e) => setGivenProducts(e.target.value)}
+          />
+        </div>
+      </div>
       <button className="btn btn-primary" onClick={calculate}>
         Calculate
       </button>
@@ -179,6 +203,7 @@ function Stoichiometry() {
 }
 
 function LimitingReagent() {
+  // reactants: list[str], products: list[str], masses: list[float]
   const [reactant1, setReactant1] = useState({
     formula: "",
     coeff: "",
@@ -267,112 +292,6 @@ function LimitingReagent() {
           </div>
         </div>
       </div>
-
-      <p style={{ textAlign: "center", color: "var(--color-text-muted)" }}>
-        + REACTS WITH
-      </p>
-
-      {/* Reactant 2 */}
-      <div className="card" style={{ marginBottom: "1rem" }}>
-        <div className="card-block">
-          <p
-            style={{
-              textTransform: "uppercase",
-              fontSize: "0.8rem",
-              color: "var(--color-text-muted)",
-            }}
-          >
-            Reactant 2
-          </p>
-          <div className="row">
-            <div className="col-md-3">
-              <div className="form-group">
-                <p>Coeff.</p>
-                <input
-                  className="form-control"
-                  placeholder="1"
-                  value={reactant2.coeff}
-                  onChange={(e) =>
-                    setReactant2({ ...reactant2, coeff: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <div className="col-md-9">
-              <div className="form-group">
-                <p>Formula</p>
-                <input
-                  className="form-control"
-                  placeholder="e.g. H2"
-                  value={reactant2.formula}
-                  onChange={(e) =>
-                    setReactant2({ ...reactant2, formula: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="form-group">
-            <p>Mass (g)</p>
-            <input
-              className="form-control"
-              placeholder="e.g. 6.0"
-              value={reactant2.mass}
-              onChange={(e) =>
-                setReactant2({ ...reactant2, mass: e.target.value })
-              }
-            />
-          </div>
-        </div>
-      </div>
-
-      <p style={{ textAlign: "center", color: "var(--color-text-muted)" }}>
-        → PRODUCES
-      </p>
-
-      {/* Product */}
-      <div className="card" style={{ marginBottom: "1rem" }}>
-        <div className="card-block">
-          <p
-            style={{
-              textTransform: "uppercase",
-              fontSize: "0.8rem",
-              color: "var(--color-text-muted)",
-            }}
-          >
-            Product
-          </p>
-          <div className="row">
-            <div className="col-md-3">
-              <div className="form-group">
-                <p>Coeff.</p>
-                <input
-                  className="form-control"
-                  placeholder="1"
-                  value={product.coeff}
-                  onChange={(e) =>
-                    setProduct({ ...product, coeff: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <div className="col-md-9">
-              <div className="form-group">
-                <p>Formula</p>
-                <input
-                  className="form-control"
-                  placeholder="e.g. NH3"
-                  value={product.formula}
-                  onChange={(e) =>
-                    setProduct({ ...product, formula: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <button
         className="btn btn-primary"
         style={{ width: "100%" }}
