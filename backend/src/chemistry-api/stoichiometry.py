@@ -1,9 +1,5 @@
-from fastapi import FastAPI
 from chempy import balance_stoichiometry
 
-app = FastAPI()
-
-@app.get("/stoichiometry/{formula}")
 def calculate_stoichiometry(given: str, moles: float, target: str, reactants: list[str], products: list[str]):
 
     react, prod = balance_equation(reactants, products)
@@ -16,7 +12,7 @@ def calculate_stoichiometry(given: str, moles: float, target: str, reactants: li
     result = (moles / given_coeff) * target_coeff
 
 
-    return round(result, 3)
+    return float(round(result, 3))
 
 def balance_equation(reactants: list, products: list):
 

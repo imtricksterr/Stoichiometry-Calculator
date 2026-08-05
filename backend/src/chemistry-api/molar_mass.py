@@ -1,8 +1,4 @@
-from fastapi import FastAPI
 import periodictable
-app = FastAPI()
-
-@app.get("/molar-mass/{formula}")
 
 def parse_formula(formula: str):
     elements = dict()

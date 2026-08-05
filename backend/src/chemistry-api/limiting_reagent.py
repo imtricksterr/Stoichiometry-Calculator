@@ -1,10 +1,6 @@
-from fastapi import FastAPI
 from stoichiometry import balance_equation
 from molar_mass import calculate_molar_mass
 
-app = FastAPI()
-
-@app.get("/limiting-reagent/{formula}")
 def calculate_limiting_reagent(
     reactants: list[str], products: list[str], masses: list[float]
     ):
