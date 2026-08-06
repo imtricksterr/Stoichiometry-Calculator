@@ -3,7 +3,7 @@ from molar_mass import calculate_molar_mass
 
 def calculate_limiting_reagent(
     reactants: list[str], products: list[str], masses: list[float]
-    ):
+    ) -> int:
 
     react, prod = balance_equation(reactants, products)
     all_coeffs = {**react, **prod} 

@@ -1,6 +1,6 @@
 import periodictable
 
-def parse_formula(formula: str):
+def parse_formula(formula: str) -> dict:
     elements = dict()
     symbol = ""
     i = 0
@@ -25,7 +25,7 @@ def parse_formula(formula: str):
 
     return elements
 
-def calculate_molar_mass(formula: str):
+def calculate_molar_mass(formula: str) -> float:
     elements = parse_formula(formula)
     total = 0.0
 

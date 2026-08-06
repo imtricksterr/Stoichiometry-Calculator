@@ -1,6 +1,6 @@
 from chempy import balance_stoichiometry
 
-def calculate_stoichiometry(given: str, moles: float, target: str, reactants: list[str], products: list[str]):
+def calculate_stoichiometry(given: str, moles: float, target: str, reactants: list[str], products: list[str]) -> float:
 
     react, prod = balance_equation(reactants, products)
 
@@ -14,7 +14,7 @@ def calculate_stoichiometry(given: str, moles: float, target: str, reactants: li
 
     return float(round(result, 3))
 
-def balance_equation(reactants: list, products: list):
+def balance_equation(reactants: list, products: list) -> dict:
 
     reac = set(reactants)
     prod = set(products)
