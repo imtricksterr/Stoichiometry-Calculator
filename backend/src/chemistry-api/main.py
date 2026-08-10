@@ -38,9 +38,9 @@ def stoichiometry(req: StoichiometryRequest):
     return { "result": result }  
 
 @app.post("/limiting-reagent")
-def limiting_reagent(req: LimitingReagentRequest): 
+def limiting_reagent(req: LimitingReagentRequest):
     result = calculate_limiting_reagent(req.reactants, req.products, req.masses)
-    return { "result": result }  
+    return { "result": result }
 
 @app.post("/percent-yield")
 def percent_yield(req: PercentYieldRequest):
