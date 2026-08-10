@@ -57,11 +57,12 @@ function MolarMass() {
   const { user } = useAuth();
 
   async function calculate() {
-    const data = await calculateMolarMass(formula); // placeholder
-    setResult(data.data.result);
+    const response = await calculateMolarMass(formula);
+    const answer = response.data.result;
+    setResult(answer);
 
     if (user) {
-      await saveCalculation("molar-mass", formula, `${data} g/mol`);
+      await saveCalculation("molar-mass", formula, `${answer} g/mol`);
     }
   }
 
@@ -126,7 +127,7 @@ function Stoichiometry() {
       await saveCalculation(
         "stoichiometry",
         `${given} -> ${target}`,
-        `${answer}`,
+        `${answer} mol`,
       );
     }
   }
@@ -160,36 +161,40 @@ function Stoichiometry() {
             />
           </div>
         </div>
-      </div>
-      <div className="form-group">
-        <label style={{ color: "var(--color-text)" }}>Target Compound</label>
-        <input
-          className="form-control"
-          placeholder="e.g. NH3"
-          value={target}
-          onChange={(e) => setTarget(e.target.value)}
-        />
-      </div>
-      <div className="col-md-6">
-        <div className="form-group">
-          <label style={{ color: "var(--color-text)" }}>Reactants</label>
-          <input
-            className="form-control"
-            placeholder="e.g. N2H2"
-            value={givenReactants}
-            onChange={(e) => setGivenReactants(e.target.value)}
-          />
+        <div className="col-md-6">
+          <div className="form-group">
+            <label style={{ color: "var(--color-text)" }}>
+              Target Compound
+            </label>
+            <input
+              className="form-control"
+              placeholder="e.g. NH3"
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="col-md-6">
-        <div className="form-group">
-          <label style={{ color: "var(--color-text)" }}>Products</label>
-          <input
-            className="form-control"
-            placeholder="e.g. NH3"
-            value={givenProducts}
-            onChange={(e) => setGivenProducts(e.target.value)}
-          />
+        <div className="col-md-6">
+          <div className="form-group">
+            <label style={{ color: "var(--color-text)" }}>Reactants</label>
+            <input
+              className="form-control"
+              placeholder="e.g. N2, H2"
+              value={givenReactants}
+              onChange={(e) => setGivenReactants(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group">
+            <label style={{ color: "var(--color-text)" }}>Products</label>
+            <input
+              className="form-control"
+              placeholder="e.g. NH3"
+              value={givenProducts}
+              onChange={(e) => setGivenProducts(e.target.value)}
+            />
+          </div>
         </div>
       </div>
       <button className="btn btn-primary" onClick={calculate}>
