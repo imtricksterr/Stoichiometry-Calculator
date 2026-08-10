@@ -24,9 +24,9 @@ calculationRouter.post("/percent-yield", getPercentYield);
 calculationRouter.post("/limiting-reagent", getLimitingReagent);
 
 // calculation routes
-calculationRouter.get("/:id", authorize, getCalculation);
 calculationRouter.get("/", authorize, getCalculations);
 calculationRouter.post("/", authorize, createCalculation);
+calculationRouter.get("/:id", authorize, getCalculation);
 calculationRouter.delete("/:id", authorize, deleteCalculation);
 
 export default calculationRouter;
