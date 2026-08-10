@@ -1,7 +1,13 @@
 import { useState } from "react";
 
 import { useAuth } from "../context/AuthContext";
-import { saveCalculation } from "../lib/api";
+import {
+  saveCalculation,
+  calculateMolarMass,
+  calculateStoichiometry,
+  calculateLimitingReagent,
+  calculatePercentYield,
+} from "../lib/api";
 
 type Tab =
   | "molar-mass"
@@ -51,11 +57,11 @@ function MolarMass() {
   const { user } = useAuth();
 
   async function calculate() {
-    const calculated = 18.015; // placeholder
-    setResult(18.015);
+    const data = await calculateMolarMass(formula); // placeholder
+    setResult(data.data.result);
 
     if (user) {
-      await saveCalculation("molar-mass", formula, `${calculated} g/mol`);
+      await saveCalculation("molar-mass", formula, `${data} g/mol`);
     }
   }
 
@@ -106,14 +112,21 @@ function Stoichiometry() {
   const { user } = useAuth();
 
   async function calculate() {
-    const calculated = 2.5; // placeholder
-    setResult(calculated);
+    const response = await calculateStoichiometry(
+      given,
+      parseFloat(givenMoles),
+      target,
+      givenReactants.split(",").map((s) => s.trim()),
+      givenProducts.split(",").map((s) => s.trim()),
+    );
+    const answer = response.data.result;
+    setResult(answer);
 
     if (user) {
       await saveCalculation(
         "stoichiometry",
         `${given} -> ${target}`,
-        `${calculated}`,
+        `${answer}`,
       );
     }
   }
@@ -203,30 +216,30 @@ function Stoichiometry() {
 }
 
 function LimitingReagent() {
-  // reactants: list[str], products: list[str], masses: list[float]
-  const [reactant1, setReactant1] = useState({
-    formula: "",
-    coeff: "",
-    mass: "",
-  });
-  const [reactant2, setReactant2] = useState({
-    formula: "",
-    coeff: "",
-    mass: "",
-  });
-  const [product, setProduct] = useState({ formula: "", coeff: "" });
+  const [reactants, setReactants] = useState(["", ""]);
+  const [products, setProducts] = useState([""]);
+  const [masses, setMasses] = useState(["", ""]);
   const [result, setResult] = useState<string | null>(null);
-
   const { user } = useAuth();
-
+  console.log("reactants:", reactants);
+  console.log("products:", products);
+  console.log(
+    "masses:",
+    masses.map((m) => parseFloat(m)),
+  );
   async function calculate() {
-    const limiting = reactant1.formula || "H2"; // placeholder
+    const response = await calculateLimitingReagent(
+      reactants,
+      products,
+      masses.map((m) => parseFloat(m)),
+    );
+    const limiting = response.data.result;
     setResult(limiting);
 
     if (user) {
       await saveCalculation(
         "limiting-reagent",
-        `${reactant1.formula} + ${reactant2.formula} -> ${product.formula}`,
+        `${reactants.join(" + ")} -> ${products.join(" + ")}`,
         `${limiting} is limiting`,
       );
     }
@@ -236,62 +249,86 @@ function LimitingReagent() {
     <div>
       <h3 style={{ color: "var(--color-text)" }}>Limiting Reagent</h3>
       <p style={{ color: "var(--color-text-muted)" }}>
-        Enter masses of two reactants to identify the limiting reagent.
+        Enter masses of your reactants to identify the limiting reagent.
       </p>
 
-      {/* Reactant 1 */}
-      <div className="card" style={{ marginBottom: "1rem" }}>
-        <div className="card-block">
-          <p
-            style={{
-              textTransform: "uppercase",
-              fontSize: "0.8rem",
-              color: "var(--color-text-muted)",
-            }}
-          >
-            Reactant 1
-          </p>
-          <div className="row">
-            <div className="col-md-3">
-              <div className="form-group">
-                <p>Coeff.</p>
-                <input
-                  className="form-control"
-                  placeholder="1"
-                  value={reactant1.coeff}
-                  onChange={(e) =>
-                    setReactant1({ ...reactant1, coeff: e.target.value })
-                  }
-                />
-              </div>
+      {/* Reactants */}
+      {reactants.map((formula, i) => (
+        <div className="card" style={{ marginBottom: "1rem" }} key={i}>
+          <div className="card-block">
+            <p
+              style={{
+                textTransform: "uppercase",
+                fontSize: "0.8rem",
+                color: "var(--color-text-muted)",
+              }}
+            >
+              Reactant {i + 1}
+            </p>
+            <div className="form-group">
+              <label>Formula</label>
+              <input
+                className="form-control"
+                placeholder="e.g. N2"
+                value={formula}
+                onChange={(e) => {
+                  const updated = [...reactants];
+                  updated[i] = e.target.value;
+                  setReactants(updated);
+                }}
+              />
             </div>
-            <div className="col-md-9">
-              <div className="form-group">
-                <p>Formula</p>
-                <input
-                  className="form-control"
-                  placeholder="e.g. N2"
-                  value={reactant1.formula}
-                  onChange={(e) =>
-                    setReactant1({ ...reactant1, formula: e.target.value })
-                  }
-                />
-              </div>
+            <div className="form-group">
+              <label>Mass (g)</label>
+              <input
+                className="form-control"
+                placeholder="e.g. 28.0"
+                value={masses[i]}
+                onChange={(e) => {
+                  const updated = [...masses];
+                  updated[i] = e.target.value;
+                  setMasses(updated);
+                }}
+              />
             </div>
-          </div>
-          <div className="form-group">
-            <p>Mass (g)</p>
-            <input
-              className="form-control"
-              placeholder="e.g. 28.0"
-              value={reactant1.mass}
-              onChange={(e) =>
-                setReactant1({ ...reactant1, mass: e.target.value })
-              }
-            />
           </div>
         </div>
-      </div>
+      ))}
+
+      <p style={{ textAlign: "center", color: "var(--color-text-muted)" }}>
+        → PRODUCES
+      </p>
+
+      {/* Products */}
+      {products.map((formula, i) => (
+        <div className="card" style={{ marginBottom: "1rem" }} key={i}>
+          <div className="card-block">
+            <p
+              style={{
+                textTransform: "uppercase",
+                fontSize: "0.8rem",
+                color: "var(--color-text-muted)",
+              }}
+            >
+              Product {i + 1}
+            </p>
+            <div className="form-group">
+              <label>Formula</label>
+              <input
+                className="form-control"
+                placeholder="e.g. NH3"
+                value={formula}
+                onChange={(e) => {
+                  const updated = [...products];
+                  updated[i] = e.target.value;
+                  setProducts(updated);
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      ))}
+
       <button
         className="btn btn-primary"
         style={{ width: "100%" }}
@@ -330,16 +367,17 @@ function PercentYield() {
   const { user } = useAuth();
 
   async function calculate() {
-    const pct =
-      Math.round((parseFloat(actual) / parseFloat(theoretical)) * 100 * 100) /
-      100;
-    setResult(Math.round(pct));
+    const data = await calculatePercentYield(
+      parseFloat(actual),
+      parseFloat(theoretical),
+    );
+    setResult(data.data.result);
 
     if (user) {
       await saveCalculation(
         "percent-yield",
         `Actual: ${actual}g / Theoretical: ${theoretical}g`,
-        `${pct}%`,
+        `${data}%`,
       );
     }
   }
