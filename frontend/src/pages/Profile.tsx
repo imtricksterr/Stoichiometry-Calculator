@@ -97,9 +97,9 @@ function Profile() {
                 View your past calculations and results.
               </p>
             </div>
-            <a href="/history" className="btn btn-outline-primary">
+            <Link to="/history" className="btn btn-outline-primary">
               View History
-            </a>
+            </Link>
           </div>
         </div>
 

@@ -1,5 +1,7 @@
+import { CHEMISTRY_API_URL } from "../config/env.js";
+
 export const getMolarMass = async (req, res, next) => {
-  const url = "http://localhost:8000/molar-mass";
+  const url = `${CHEMISTRY_API_URL}/molar-mass`;
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -19,7 +21,7 @@ export const getMolarMass = async (req, res, next) => {
 };
 
 export const getStoichiometry = async (req, res, next) => {
-  const url = "http://localhost:8000/stoichiometry";
+  const url = `${CHEMISTRY_API_URL}/stoichiometry`;
 
   try {
     const response = await fetch(url, {
@@ -47,7 +49,7 @@ export const getStoichiometry = async (req, res, next) => {
 };
 
 export const getPercentYield = async (req, res, next) => {
-  const url = "http://localhost:8000/percent-yield";
+  const url = `${CHEMISTRY_API_URL}/percent-yield`;
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -66,7 +68,7 @@ export const getPercentYield = async (req, res, next) => {
 };
 
 export const getLimitingReagent = async (req, res, next) => {
-  const url = "http://localhost:8000/limiting-reagent";
+  const url = `${CHEMISTRY_API_URL}/limiting-reagent`;
 
   try {
     const response = await fetch(`${url}`, {

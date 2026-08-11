@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import { PORT } from "./config/env.js";
+import { PORT, CLIENT_URL } from "./config/env.js";
 
 import connectDB from "./database/mongodb.js";
 import authRouter from "./routes/auth.routes.js";
@@ -13,7 +13,17 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        origin.endsWith(".vercel.app") ||
+        origin === "http://localhost:5173"
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
