@@ -30,6 +30,7 @@ def calculate_molar_mass(formula: str) -> float:
     total = 0.0
 
     for symbol, count in elements.items():
+        if not hasattr(periodictable, symbol): raise ValueError(f"'{symbol}' is not a valid element symbol")
         element = getattr(periodictable, symbol)
         total += element.mass * count
 

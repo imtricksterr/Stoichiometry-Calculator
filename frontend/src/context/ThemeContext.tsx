@@ -14,11 +14,14 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
 
   function toggleTheme() {
     setIsDark((prev) => {
       const next = !prev;
+      localStorage.setItem("theme", next ? "dark" : "light");
       document.documentElement.setAttribute(
         "data-theme",
         next ? "dark" : "light",
@@ -28,7 +31,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "light");
+    const saved = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", saved);
   }, []);
 
   return (

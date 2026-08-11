@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const { user, logout } = useAuth();
@@ -74,8 +75,8 @@ function Profile() {
             <h5 style={{ marginBottom: "1rem" }}>Saved Calculations</h5>
             <p style={{ color: "var(--color-text-muted)" }}>
               No saved calculations yet. Open{" "}
-              <a href="/calculations">calculator</a> to get started.
-              <a href="/history">history</a> to get started.
+              <Link to="/calculations">calculator</Link> to get started.
+              <Link to="/history">history</Link> to get started.
             </p>
           </div>
         </div>

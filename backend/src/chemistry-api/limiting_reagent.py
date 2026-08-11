@@ -5,14 +5,16 @@ def calculate_limiting_reagent(
     reactants: list[str], products: list[str], masses: list[float]
     ) -> int:
 
-    react, prod = balance_equation(reactants, products)
+    try: 
+        react, prod = balance_equation(reactants, products)
+    except Exception: raise ValueError("Invalid chemical formula: Double check your Reactants and/or Products")
     all_coeffs = {**react, **prod} 
     reference_prod = list(prod.keys())[0]
     reference_coeff = all_coeffs[reference_prod]
 
     product_moles = {}
 
-    for formula, mass in zip(reactants, masses): 
+    for formula, mass in zip(reactants, masses):
         moles = mass / calculate_molar_mass(formula)
         product_moles[formula] = (moles / all_coeffs[formula]) * reference_coeff
 

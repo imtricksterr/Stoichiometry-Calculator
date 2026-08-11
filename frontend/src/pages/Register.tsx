@@ -14,7 +14,12 @@ function Register() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-    setLoading(true);
+
+    if (!name) return setError("Name is required");
+    if (!email) return setError("Email is required");
+    if (!password) return setError("Password is required");
+    if (password.length < 6) setLoading(true);
+
     try {
       await register(name, email, password);
       navigate("/");

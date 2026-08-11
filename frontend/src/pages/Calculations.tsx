@@ -54,15 +54,25 @@ function Calculations() {
 function MolarMass() {
   const [formula, setFormula] = useState("");
   const [result, setResult] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { user } = useAuth();
 
   async function calculate() {
-    const response = await calculateMolarMass(formula);
-    const answer = response.data.result;
-    setResult(answer);
+    setLoading(true);
+    setError("");
+    try {
+      const response = await calculateMolarMass(formula);
+      const answer = response.data.result;
+      setResult(answer);
 
-    if (user) {
-      await saveCalculation("molar-mass", formula, `${answer} g/mol`);
+      if (user) {
+        await saveCalculation("molar-mass", formula, `${answer} g/mol`);
+      }
+    } catch (err: any) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -80,8 +90,13 @@ function MolarMass() {
           onChange={(e) => setFormula(e.target.value)}
         />
       </div>
-      <button className="btn btn-primary" onClick={calculate}>
-        Calculate
+      {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+      <button
+        className="btn btn-primary"
+        onClick={calculate}
+        disabled={loading}
+      >
+        {loading ? "Calculating..." : "Calculate"}
       </button>
       {result && (
         <div className="card" style={{ marginTop: "1.5rem" }}>
@@ -110,25 +125,35 @@ function Stoichiometry() {
   const [givenProducts, setGivenProducts] = useState("");
   const [target, setTarget] = useState("");
   const [result, setResult] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { user } = useAuth();
 
   async function calculate() {
-    const response = await calculateStoichiometry(
-      given,
-      parseFloat(givenMoles),
-      target,
-      givenReactants.split(",").map((s) => s.trim()),
-      givenProducts.split(",").map((s) => s.trim()),
-    );
-    const answer = response.data.result;
-    setResult(answer);
-
-    if (user) {
-      await saveCalculation(
-        "stoichiometry",
-        `${given} -> ${target}`,
-        `${answer} mol`,
+    setLoading(true);
+    setError("");
+    try {
+      const response = await calculateStoichiometry(
+        given,
+        parseFloat(givenMoles),
+        target,
+        givenReactants.split(",").map((s) => s.trim()),
+        givenProducts.split(",").map((s) => s.trim()),
       );
+      const answer = response.data.result;
+      setResult(answer);
+
+      if (user) {
+        await saveCalculation(
+          "stoichiometry",
+          `${given} -> ${target}`,
+          `${answer} mol`,
+        );
+      }
+    } catch (err: any) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -197,8 +222,13 @@ function Stoichiometry() {
           </div>
         </div>
       </div>
-      <button className="btn btn-primary" onClick={calculate}>
-        Calculate
+      {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+      <button
+        className="btn btn-primary"
+        onClick={calculate}
+        disabled={loading}
+      >
+        {loading ? "Calculating..." : "Calculate"}
       </button>
       {result && (
         <div className="card" style={{ marginTop: "1.5rem" }}>
@@ -225,28 +255,33 @@ function LimitingReagent() {
   const [products, setProducts] = useState([""]);
   const [masses, setMasses] = useState(["", ""]);
   const [result, setResult] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { user } = useAuth();
-  console.log("reactants:", reactants);
-  console.log("products:", products);
-  console.log(
-    "masses:",
-    masses.map((m) => parseFloat(m)),
-  );
-  async function calculate() {
-    const response = await calculateLimitingReagent(
-      reactants,
-      products,
-      masses.map((m) => parseFloat(m)),
-    );
-    const limiting = response.data.result;
-    setResult(limiting);
 
-    if (user) {
-      await saveCalculation(
-        "limiting-reagent",
-        `${reactants.join(" + ")} -> ${products.join(" + ")}`,
-        `${limiting} is limiting`,
+  async function calculate() {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await calculateLimitingReagent(
+        reactants,
+        products,
+        masses.map((m) => parseFloat(m)),
       );
+      const limiting = response.data.result;
+      setResult(limiting);
+
+      if (user) {
+        await saveCalculation(
+          "limiting-reagent",
+          `${reactants.join(" + ")} -> ${products.join(" + ")}`,
+          `${limiting} is limiting`,
+        );
+      }
+    } catch (err: any) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -333,13 +368,14 @@ function LimitingReagent() {
           </div>
         </div>
       ))}
-
+      {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
       <button
         className="btn btn-primary"
         style={{ width: "100%" }}
         onClick={calculate}
+        disabled={loading}
       >
-        Find Limiting Reagent
+        {loading ? "Finding Limiting Reagent..." : "Find Limiting Reagent"}
       </button>
 
       {result && (
@@ -369,21 +405,32 @@ function PercentYield() {
   const [actual, setActual] = useState("");
   const [theoretical, setTheoretical] = useState("");
   const [result, setResult] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { user } = useAuth();
 
   async function calculate() {
-    const data = await calculatePercentYield(
-      parseFloat(actual),
-      parseFloat(theoretical),
-    );
-    setResult(data.data.result);
+    setLoading(true);
+    setError("");
 
-    if (user) {
-      await saveCalculation(
-        "percent-yield",
-        `Actual: ${actual}g / Theoretical: ${theoretical}g`,
-        `${data}%`,
+    try {
+      const data = await calculatePercentYield(
+        parseFloat(actual),
+        parseFloat(theoretical),
       );
+      setResult(data.data.result);
+
+      if (user) {
+        await saveCalculation(
+          "percent-yield",
+          `Actual: ${actual}g / Theoretical: ${theoretical}g`,
+          `${data.data.result}%`,
+        );
+      }
+    } catch (err: any) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -421,8 +468,13 @@ function PercentYield() {
           </div>
         </div>
       </div>
-      <button className="btn btn-primary" onClick={calculate}>
-        Calculate
+      {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+      <button
+        className="btn btn-primary"
+        onClick={calculate}
+        disabled={loading}
+      >
+        {loading ? "Calculating..." : "Calculate"}
       </button>
       {result !== null && (
         <div className="card" style={{ marginTop: "1.5rem" }}>

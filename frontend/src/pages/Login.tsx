@@ -13,6 +13,12 @@ function Login() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    if (!email) return setError("Email is required");
+    if (!password) return setError("Password is required");
+    if (password.length < 6)
+      return setError("Password must be at least 6 characters");
+
     setLoading(true);
     try {
       await login(email, password);

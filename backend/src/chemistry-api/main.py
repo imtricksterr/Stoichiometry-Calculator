@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from molar_mass import calculate_molar_mass
 from stoichiometry import calculate_stoichiometry
@@ -29,18 +29,27 @@ class PercentYieldRequest(BaseModel):
 
 @app.post("/molar-mass")
 def molar_mass(req: MolarMassRequest): 
-    result = calculate_molar_mass(req.formula)
-    return { "result": result }  
+    try: 
+        result = calculate_molar_mass(req.formula)
+        return { "result": result }  
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/stoichiometry")
 def stoichiometry(req: StoichiometryRequest): 
-    result = calculate_stoichiometry(req.given, req.moles, req.target, req.reactants, req.products)
-    return { "result": result }  
+    try: 
+        result = calculate_stoichiometry(req.given, req.moles, req.target, req.reactants, req.products)
+        return { "result": result }  
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/limiting-reagent")
 def limiting_reagent(req: LimitingReagentRequest):
-    result = calculate_limiting_reagent(req.reactants, req.products, req.masses)
-    return { "result": result }
+    try:
+        result = calculate_limiting_reagent(req.reactants, req.products, req.masses)
+        return { "result": result }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/percent-yield")
 def percent_yield(req: PercentYieldRequest):

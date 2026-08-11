@@ -8,6 +8,10 @@ export const getMolarMass = async (req, res, next) => {
     });
 
     const data = await response.json();
+    if (!response.ok) {
+      res.status(400).json({ success: false, message: data.detail });
+    }
+
     res.status(200).json({ success: true, data });
   } catch (error) {
     next(error);
@@ -31,6 +35,11 @@ export const getStoichiometry = async (req, res, next) => {
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      res.status(400).json({ success: false, message: data.detail });
+    }
+
     res.status(200).json({ success: true, data });
   } catch (error) {
     next(error);
@@ -59,9 +68,6 @@ export const getPercentYield = async (req, res, next) => {
 export const getLimitingReagent = async (req, res, next) => {
   const url = "http://localhost:8000/limiting-reagent";
 
-  console.log("reactants:", req.body.reactants);
-  console.log("products:", req.body.products);
-  console.log("masses:", req.body.masses);
   try {
     const response = await fetch(`${url}`, {
       method: "POST",
@@ -74,6 +80,10 @@ export const getLimitingReagent = async (req, res, next) => {
     });
 
     const data = await response.json();
+    if (!response.ok) {
+      res.status(400).json({ success: false, message: data.detail });
+    }
+
     res.status(200).json({ success: true, data });
   } catch (error) {
     next(error);
