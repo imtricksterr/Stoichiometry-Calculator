@@ -9,4 +9,5 @@ export const {
   JWT_SECRET,
   JWT_EXPIRES_IN,
   CHEMISTRY_API_URL,
+  CLIENT_URL,
 } = process.env;
