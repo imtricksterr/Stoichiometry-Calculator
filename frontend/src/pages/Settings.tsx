@@ -4,7 +4,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
 function Settings() {
-  const { user, updateUser, deleteAccount } = useAuth();
+  const { user, updateUser, logout, deleteAccount } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
@@ -20,6 +20,11 @@ function Settings() {
   if (!user) {
     navigate("/login");
     return null;
+  }
+
+  function handleLogout() {
+    logout();
+    navigate("/");
   }
 
   async function handleAccountSubmit(e: React.FormEvent) {
@@ -173,6 +178,14 @@ function Settings() {
           </button>
         </div>
       </div>
+      {/* Logout */}
+      <button
+        className="btn btn-danger"
+        style={{ width: "100%", marginBottom: 20 }}
+        onClick={handleLogout}
+      >
+        Log Out
+      </button>
 
       {/* Danger Zone */}
       <div
