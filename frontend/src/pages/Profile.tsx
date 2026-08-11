@@ -1,6 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
 
 function Profile() {
   const { user, logout } = useAuth();
@@ -71,18 +70,6 @@ function Profile() {
 
         {/* Saved Calculations */}
         <div className="card" style={{ marginBottom: "1rem" }}>
-          <div className="card-block">
-            <h5 style={{ marginBottom: "1rem" }}>Saved Calculations</h5>
-            <p style={{ color: "var(--color-text-muted)" }}>
-              No saved calculations yet. Open{" "}
-              <Link to="/calculations">calculator</Link> to get started.
-              <Link to="/history">history</Link> to get started.
-            </p>
-          </div>
-        </div>
-
-        {/* Saved Calculations */}
-        <div className="card" style={{ marginBottom: "1rem" }}>
           <div
             className="card-block"
             style={{
@@ -97,9 +84,9 @@ function Profile() {
                 View your past calculations and results.
               </p>
             </div>
-            <a href="/history" className="btn btn-outline-primary">
+            <Link to="/history" className="btn btn-outline-primary">
               View History
-            </a>
+            </Link>
           </div>
         </div>
 
