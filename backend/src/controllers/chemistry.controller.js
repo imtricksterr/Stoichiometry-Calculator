@@ -1,4 +1,4 @@
-import { CHEMISTRY_API_URL } from "../config/env";
+import { CHEMISTRY_API_URL } from "../config/env.js";
 
 export const getMolarMass = async (req, res, next) => {
   const url = `{CHEMISTRY_API_URL}/molar-mass`;
