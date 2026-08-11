@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import Calculation from "../models/calculation.model.js";
 
 export const getUser = async (req, res, next) => {
   try {
@@ -34,6 +35,7 @@ export const updateUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) => {
   try {
+    await Calculation.deleteMany({ user: req.user._id });
     await User.findByIdAndDelete(req.user._id);
 
     res
