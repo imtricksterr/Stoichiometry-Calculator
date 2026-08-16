@@ -10,4 +10,6 @@ export const {
   JWT_EXPIRES_IN,
   CHEMISTRY_API_URL,
   CLIENT_URL,
+  ARCJET_ENV,
+  ARCJET_KEY,
 } = process.env;
